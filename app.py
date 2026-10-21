@@ -88,7 +88,7 @@ st.markdown(
 mindestens kappen muss, damit das Netz zerfällt. Das **Verfahren von Stoer und Wagner** findet ihn **exakt** in n − 1 Phasen (stärkste Bindung zuerst, dann die letzten beiden verschmelzen). Das **Verfahren von Karger** würfelt:
 Es zieht zufällige Leitungen zusammen, bis zwei Gruppen übrig sind. Ein einzelner Lauf trifft einen bestimmten kleinsten Schnitt nur mit Wahrscheinlichkeit **mindestens 2 / (n (n − 1))**, darum wiederholt man; wie pessimistisch diese Schranke ist, zeigen die Experimente.
 
-Auffällig: In den Modellnetzen trennt der kleinste Schnitt meist nur **einen einzelnen Standort** ab (der Mindestgrad genügt dann), und bei Netzen aus Regionen ist er eine echte Teilung. Die Zahl der kleinsten Schnitte reicht von 1 bis **C(n, 2)** (Kreis).
+Auffällig: In den dünnen Modellnetzen (Zufallsnetz, Gitter, Ring, skalenfreies Netz) trennt der kleinste Schnitt fast immer nur **einen einzelnen Standort** ab (der Mindestgrad genügt dann); bei dichten Regionen mit nur einer Leitung dazwischen (Verbundnetz, 16 Standorte) ist er eine echte Teilung. Die Zahl der kleinsten Schnitte reicht von 1 bis **C(n, 2)** (Kreis).
 
 Das ist das zweite Stück der Reihe **Schnitte und Zusammenhang**. Den Zusammenhang über disjunkte Wege zeigt **menger-demo**; Max-Flow = Min-Cut für ein Paar **edmonds-karp-demo**; alle Paare auf einmal **gomory-hu-demo**.
 Weiter unten: die Experimente **🔬**, **🚧 Wo die Annahmen enden** und der Expander **📐 Mathematische Formulierung**.
@@ -275,7 +275,7 @@ st.markdown(
 | **Ungerichtetes Netz** | Für gerichtete Netze ist der kleinste Schnitt ein anderes Problem (Fluss von s nach t); die Demo rechnet nur ungerichtete Netze. | edmonds-karp-demo |
 | **Ein globaler Schnitt, nicht alle Paare** | Den kleinsten Schnitt für jedes Paar liefert der Gomory–Hu-Baum; hier gibt es einen Wert für das ganze Netz. | gomory-hu-demo |
 | **Zusammenhang über Wege** | Wie viele disjunkte Wege zwei Standorte verbinden, rechnet menger-demo; ein Schnitt zählt Leitungen, nicht Standorte. | menger-demo |
-| **Kleiner Schnitt heißt nicht ausgewogen** | Der kleinste Schnitt trennt meist nur einen Standort ab; wer ein Netz in große Teile teilen will, braucht eine Bedingung an die Größe der Seiten. | - |
+| **Kleiner Schnitt heißt nicht ausgewogen** | Der kleinste Schnitt trennt auf den dünnen Modellnetzen fast immer nur einen Standort ab; wer ein Netz in große Teile teilen will, braucht eine Bedingung an die Größe der Seiten. | - |
 | **Nur die einfache Kontraktion** | Verbesserte Varianten (rekursive Kontraktion) und die schnellsten Verfahren der Theorie stehen nur als Einordnung in der Formulierung. | - |
 | **Synthetische Netze, bis 80 Standorte** | Reale Netze haben andere Strukturen; Aufwand in Matrixzugriffen und Kantenprüfungen gezählt, nicht in Sekunden. Die Aufzählung aller Schnitte läuft bis 16 Standorte. | - |
 """

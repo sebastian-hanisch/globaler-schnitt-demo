@@ -191,7 +191,8 @@ def verdict_trivial(rows):
     no_trivial = [r for r in unit if r["all_trivial"] == 0]
     names = ", ".join(r["label"] for r in no_trivial)
     text = (f"Bei gleichen Gewichten sind auf {_i(nets)} Netzen ({len(unit)} Netztypen) in {_i(all_trivial)} ({_pct(all_trivial / nets)} %) alle kleinsten Schnitte ein einzelner Standort. "
-            + (f"Kein Netz mit nur trivialen Schnitten gibt es bei: {names}. " if no_trivial else "")
+            + (f"Kein Netz mit nur trivialen Schnitten gibt es bei: {names}; auf den übrigen {_i(len(unit) - len(no_trivial))} Netztypen sind es {_i(all_trivial)} von "
+               f"{_i(sum(r['nets'] for r in unit if r['all_trivial']))} Netzen. " if no_trivial else "")
             + "Die kleinste Zahl kleinster Schnitte ist 1, die größte "
             + f"{_i(max(r['max_cuts'] for r in unit))} (Kreis: alle C(n, 2) Schnitte durch zwei Leitungen).")
     rand = [r for r in rows if r["weights"] == "random"]
@@ -229,7 +230,7 @@ def verdict_repetitions(rows):
     bound = rows[0]["bound"]
     worst = max((r for r in rows if r["worst"] is not None), key=lambda r: r["worst"])
     med = max((r for r in rows if r["median"] is not None), key=lambda r: r["median"])
-    text = (f"Für {_pct(C.CONFIDENCE)} % Sicherheit braucht Karger auf den Modellnetzen im Median höchstens {_i(med['median'])} Läufe ({med['label']}), im schlechtesten Netz {_i(worst['worst'])} ({worst['label']}); "
+    text = (f"Für {_pct(C.CONFIDENCE)} % Sicherheit braucht Karger auf den Modellnetzen im Median höchstens {_i(med['median'])} Läufe ({med['label']}), im schlechtesten Netz geschätzt {_i(worst['worst'])} ({worst['label']}); "
             f"die Schranke verlangt {_i(bound)} Läufe bei {_i(rows[0]['n'])} Standorten.")
     never = sum(r["never"] for r in rows)
     if never:
@@ -242,6 +243,6 @@ def verdict_cost(rows):
     sw = " / ".join(_i(r["sw_steps"]) for r in rows)
     k = " / ".join(_dec(r["karger_steps_per_run"]) for r in rows)
     text = (f"Stoer–Wagner braucht bei {parts} Standorten {' / '.join(_i(r['phases']) for r in rows)} Phasen und {sw} Matrixzugriffe; ein Lauf von Karger {k} Kantenprüfungen. "
-            f"Bis {_pct(C.CONFIDENCE)} % Sicherheit rechnet die Schranke mit {' / '.join(_i(r['bound_reps']) for r in rows)} Läufen, gemessen genügen im Mittel "
+            f"Bis {_pct(C.CONFIDENCE)} % Sicherheit rechnet die Schranke mit {' / '.join(_i(r['bound_reps']) for r in rows)} Läufen, gemessen genügen im Mittel über {_i(C.EX_COST_SEEDS)} Netze je Größe "
             f"{' / '.join(_dec(r['reps']) if r['reps'] is not None else '?' for r in rows)}. Matrixzugriffe und Kantenprüfungen sind verschiedene Einheiten: verglichen werden die Läufe, nicht die Zahlen.")
     return ("warning" if any(r["never"] for r in rows) else "info"), text

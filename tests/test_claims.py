@@ -43,6 +43,9 @@ def test_the_success_rate_of_one_karger_run_against_the_guarantee():
     assert all(r["guarantee"] == 1 / 120 and r["nets"] == 12 and r["runs"] == 400 and r["n"] == 16 for r in rows)
     assert round(min(r["mean_rate"] for r in rows if r["mean_rate"] < 1) / (1 / 120)) == 31 and round(max(r["mean_rate"] for r in rows if r["mean_rate"] < 1) / (1 / 120)) == 89
     assert [round(r["mean_fixed"], 4) for r in rows][:2] == [0.0083, 0.059]
+    # für einen bestimmten kleinsten Schnitt (den von Stoer–Wagner gefundenen) ohne den Kreis: das 7- bis 31-Fache der Schranke
+    fixed = [r["mean_fixed"] * 120 for r in rows if r["kind"] != "cycle"]
+    assert round(min(fixed)) == 7 and round(max(fixed)) == 31
 
 
 def test_on_the_cycle_the_guarantee_is_exact_and_measured():
@@ -97,8 +100,8 @@ def test_verdict_texts_quote_the_readme_numbers():
     text = ev.verdict_trivial(t)[1]
     assert "in 58 (60 %) alle kleinsten Schnitte ein einzelner Standort" in text and "die größte 120" in text and "in 84 von 96 Netzen bei gleichen Gewichten und in 75 von 96 bei zufälligen Gewichten" in text
     assert "zwischen 25 % (Ring mit Abkürzungen) und 74 % (Skalenfreies Netz)" in ev.verdict_karger(k, c)[1] and "gemessen 0,0083 in 20.000 Läufen" in ev.verdict_karger(k, c)[1]
-    assert "im Median höchstens 17 Läufe (Ring mit Abkürzungen), im schlechtesten Netz 42 (Zufallsnetz, Grad 5); die Schranke verlangt 551" in ev.verdict_repetitions(r)[1]
-    assert "1.330 / 10.660 / 85.320 Matrixzugriffe" in ev.verdict_cost(cost)[1] and "gemessen genügen im Mittel 10 / 8,5 / 14" in ev.verdict_cost(cost)[1]
+    assert "im Median höchstens 17 Läufe (Ring mit Abkürzungen), im schlechtesten Netz geschätzt 42 (Zufallsnetz, Grad 5); die Schranke verlangt 551" in ev.verdict_repetitions(r)[1]
+    assert "1.330 / 10.660 / 85.320 Matrixzugriffe" in ev.verdict_cost(cost)[1] and "gemessen genügen im Mittel über 4 Netze je Größe 10 / 8,5 / 14" in ev.verdict_cost(cost)[1]
 
 
 def test_the_experiment_grid_is_the_documented_one():

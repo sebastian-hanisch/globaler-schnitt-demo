@@ -61,7 +61,7 @@ def test_trivial_counts_the_nets_names_the_exceptions_and_compares_with_random_w
             _t_row("Zufallsnetz", "random", equal=11), _t_row("Kreis", "random", all_trivial=0, equal=5), _t_row("Gitter", "random", equal=9)]
     kind, text = ev.verdict_trivial(rows)
     assert kind == "info"
-    assert ("Bei gleichen Gewichten sind auf 36 Netzen (3 Netztypen) in 22 (61 %) alle kleinsten Schnitte ein einzelner Standort. Kein Netz mit nur trivialen Schnitten gibt es bei: Kreis. "
+    assert ("Bei gleichen Gewichten sind auf 36 Netzen (3 Netztypen) in 22 (61 %) alle kleinsten Schnitte ein einzelner Standort. Kein Netz mit nur trivialen Schnitten gibt es bei: Kreis; auf den übrigen 2 Netztypen sind es 22 von 24 Netzen. "
             "Die kleinste Zahl kleinster Schnitte ist 1, die größte 120 (Kreis: alle C(n, 2) Schnitte durch zwei Leitungen). Der Wert des kleinsten Schnitts ist gleich dem des kleinsten einzelnen "
             "Standorts in 36 von 36 Netzen bei gleichen Gewichten und in 25 von 36 bei zufälligen Gewichten.") == text
     only_unit = ev.verdict_trivial([_t_row("Zufallsnetz"), _t_row("Gitter")])[1]
@@ -109,7 +109,7 @@ def test_repetitions_name_the_largest_median_the_worst_net_and_the_bound():
     rows = [_r_row("Kreis", 1, 1), _r_row("Ring", 17, 27), _r_row("Zufall", 16, 42)]
     kind, text = ev.verdict_repetitions(rows)
     assert kind == "info"
-    assert ("Für 99 % Sicherheit braucht Karger auf den Modellnetzen im Median höchstens 17 Läufe (Ring), im schlechtesten Netz 42 (Zufall); die Schranke verlangt 551 Läufe bei 16 Standorten.") == text
+    assert ("Für 99 % Sicherheit braucht Karger auf den Modellnetzen im Median höchstens 17 Läufe (Ring), im schlechtesten Netz geschätzt 42 (Zufall); die Schranke verlangt 551 Läufe bei 16 Standorten.") == text
     kind2, text2 = ev.verdict_repetitions(rows[:2] + [_r_row("Zufall", 16, 42, never=2)])
     assert kind2 == "warning" and text2.endswith("In 2 Netzen traf kein gemessener Lauf einen kleinsten Schnitt.")
 
@@ -125,7 +125,7 @@ def test_cost_names_phases_accesses_runs_and_the_unit_note():
     kind, text = ev.verdict_cost(rows)
     assert kind == "info"
     assert ("Stoer–Wagner braucht bei 20, 40 und 80 Standorten 19 / 39 / 79 Phasen und 1.330 / 10.660 / 85.320 Matrixzugriffe; ein Lauf von Karger 25,5 / 61,1 / 142,9 Kantenprüfungen. "
-            "Bis 99 % Sicherheit rechnet die Schranke mit 873 / 3.590 / 14.551 Läufen, gemessen genügen im Mittel 10 / 8,5 / 14. Matrixzugriffe und Kantenprüfungen sind verschiedene Einheiten: "
+            "Bis 99 % Sicherheit rechnet die Schranke mit 873 / 3.590 / 14.551 Läufen, gemessen genügen im Mittel über 4 Netze je Größe 10 / 8,5 / 14. Matrixzugriffe und Kantenprüfungen sind verschiedene Einheiten: "
             "verglichen werden die Läufe, nicht die Zahlen.") == text
     unknown = rows[:2] + [_cost_row(80, 79, 85320.0, 142.9208, None, 14551, never=1)]
     assert ev.verdict_cost(unknown)[0] == "warning" and "10 / 8,5 / ?" in ev.verdict_cost(unknown)[1]
