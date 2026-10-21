@@ -1,7 +1,6 @@
 # Globaler Min-Cut: Stoer–Wagner und Karger – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-globaler-schnitt-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-globaler-schnitt-demo.streamlit.app/)**
 
 Zweites Stück der Reihe **Schnitte und Zusammenhang** (Arbeitstitel der Linie `schnitte-zusammenhang`) in der „Konzepte“-Reihe für die Website „Sebastian Hanisch – Operations Research und Machine Learning“, Bereich Graphentheorie. Vehikel: ein **Verbindungsnetz zwischen Standorten** (Depots, Umschlagpunkte, Werke), synthetisch und mit festem Zufalls-Seed, die Leitungen mit ganzzahligen Gewichten (Kapazität oder Stärke). Die Demo fragt: **Was ist der kleinste Schnitt des ganzen Netzes, und wie oft muss man würfeln?** Ein Schnitt teilt die Standorte in zwei Seiten, sein Wert ist die Summe der Gewichte der Leitungen dazwischen. Das Verfahren von Stoer und Wagner findet den kleinsten Schnitt exakt; das Verfahren von Karger würfelt (zufällige Kontraktion) und trifft einen bestimmten kleinsten Schnitt in einem Lauf nur mit Wahrscheinlichkeit mindestens 2 / (n (n − 1)).
 
